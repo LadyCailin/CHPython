@@ -8,6 +8,7 @@ import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.environments.Environment;
+import com.laytonsmith.core.exceptions.CRE.CREPluginInternalException;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.functions.Exceptions;
@@ -22,8 +23,8 @@ public class Functions {
 	@api
 	public static class python extends AbstractFunction {
 
-		public Exceptions.ExceptionType[] thrown() {
-			return new Exceptions.ExceptionType[]{};
+		public Class[] thrown() {
+			return new Class[]{CREPluginInternalException.class};
 		}
 
 		public boolean isRestricted() {
@@ -51,7 +52,7 @@ public class Functions {
 				}
 				inter.exec(script);
 			} catch(Exception e){
-				throw new ConfigRuntimeException(e.getMessage(), Exceptions.ExceptionType.PluginInternalException, t, e);
+				throw new CREPluginInternalException(e.getMessage(), t, e);
 			}
 			CArray ret = CArray.GetAssociativeArray(t);
 			for(Construct key : toReturn.keySet()){
