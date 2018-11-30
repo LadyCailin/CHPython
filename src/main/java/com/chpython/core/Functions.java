@@ -2,7 +2,7 @@ package com.chpython.core;
 
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.CHVersion;
+import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.Construct;
@@ -11,8 +11,7 @@ import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.exceptions.CRE.CREPluginInternalException;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
-import com.laytonsmith.core.functions.Exceptions;
-import org.python.core.PyObject;
+import com.laytonsmith.core.natives.interfaces.Mixed;
 import org.python.util.PythonInterpreter;
 
 /**
@@ -35,7 +34,7 @@ public class Functions {
 			return null;
 		}
 
-		public Construct exec(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
+		public Mixed exec(Target t, Environment environment, Mixed... args) throws ConfigRuntimeException {
 			String script = args[0].val();
 			CArray env = new CArray(t);
 			CArray toReturn = new CArray(t);
@@ -55,7 +54,7 @@ public class Functions {
 				throw new CREPluginInternalException(e.getMessage(), t, e);
 			}
 			CArray ret = CArray.GetAssociativeArray(t);
-			for(Construct key : toReturn.keySet()){
+			for(Mixed key : toReturn.keySet()){
 				String k = toReturn.get(key, t).val();
 				Object var = inter.get(k, Object.class);
 				ret.set(k, Construct.GetConstruct(var), t);
@@ -79,7 +78,7 @@ public class Functions {
 		}
 
 		public Version since() {
-			return CHVersion.V3_3_1;
+			return MSVersion.V3_3_1;
 		}
 
 	}
