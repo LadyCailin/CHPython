@@ -11,7 +11,7 @@ import com.laytonsmith.core.extensions.AbstractExtension;
 public class CHPython extends AbstractExtension {
 
 	public Version getVersion() {
-		return new SimpleVersion("1.0.0");
+		return new SimpleVersion(1, 0, 3, "SNAPSHOT");
 	}
 
 }
